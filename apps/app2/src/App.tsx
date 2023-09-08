@@ -1,0 +1,14 @@
+import React, { useState } from 'react'
+import './App.css'
+import Button from './components/Button'
+
+function App() {
+	useState()
+	return (
+		<div>
+			app2 <Button />
+		</div>
+	)
+}
+
+export default App
