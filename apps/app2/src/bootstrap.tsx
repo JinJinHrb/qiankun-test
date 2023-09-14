@@ -14,11 +14,10 @@ export function mount(props?: {
 }) {
 	;(
 		(props?.container || document).querySelector('#root') as HTMLElement
-	).innerHTML = `<div>app2</div><button id='button'>show app1 drawer</button>`
-
+	).innerHTML = `<div style="margin-left:15px"><div>极简 app2</div><button id='button' style="margin-top:5px">show app1 drawer</button><div>`
 	;(props?.container || document).querySelector('#button')?.addEventListener('click', () => {
 		// step4: 不依赖react，原生调用其他子应用
-		props?.appStore.getState().app1.openAi()
+		props?.appStore.getState().app1?.openAi()
 		console.log('showDrawer')
 	})
 

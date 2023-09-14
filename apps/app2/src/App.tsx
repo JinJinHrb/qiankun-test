@@ -6,7 +6,7 @@ function App() {
 	useState()
 	return (
 		<div>
-			app2 <Button />
+			app2 <Button id={'button2'} />
 		</div>
 	)
 }

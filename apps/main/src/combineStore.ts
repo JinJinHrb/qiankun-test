@@ -11,18 +11,19 @@ export function combineStore<
 >(creator: StateCreator<TNestedState, Mis, Mos>, originalApi: StoreApi<TOriginal>, key: TKey): Pick<TOriginal, TKey> {
 	type InnerStore = TOriginal[TKey]
 
-	const api: StoreApi<InnerStore> = {
+	const api: Omit<StoreApi<InnerStore>, 'destroy'> = {
 		setState: nestedSetState(originalApi, key),
 		getState: nestedGetState(originalApi, key),
 		subscribe: (listener: (state: InnerStore, prevState: InnerStore) => void) => () => {
 			return originalApi.subscribe((state, prevState) => {
-				debugger
 				if (state[key] !== prevState[key]) {
 					listener(state[key], prevState[key])
 				}
 			})
 		},
-		destroy: originalApi.destroy,
+		// destroy: originalApi.destroy,
+		// Use `unsubscribe` returned by `subscribe`
+		// deprecated @ 2023-09-08 15:52:18
 	}
 
 	// we need to cast it, because somehow typescript don't recognize that the TNestedState is the same as TOriginal[TKey]

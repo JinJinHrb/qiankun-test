@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "immer": "^10.0.2",
     "zustand": "^4.3.9"
   }
 }
