@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "antd": "^5.9.2",
     "immer": "^10.0.2",
+    "lodash": "^4.17.21",
     "zustand": "^4.3.9"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.198"
   }
 }

@@ -28,20 +28,18 @@ const globalStore = withLenses(() => ({
 	}>((set, get) => ({
 		isMainAccount: false,
 		update: (flag: boolean) => set({ isMainAccount: flag }, false, 'update profile'),
-		getProfile: async (partial: string) => {
+		getProfile: async (rawPartial: string | string[]) => {
 			const getters: Partial<{
 				[key in ProfileDomainMapValue]: ProfileGetterMapValue
 			}> = {}
-			partial
-				.split(',')
-				.map(_.trim)
-				.forEach(k => {
-					const getter = profileGetterMap.get(k)
-					const domainKey = profileDomainMap.get(k) as ProfileDomainMapValue
-					if (!get()[domainKey] && getter && !getters[domainKey]) {
-						getters[domainKey] = getter
-					}
-				})
+			const partial = _.isString(rawPartial) ? [rawPartial] : rawPartial
+			partial.map(_.trim).forEach(k => {
+				const getter = profileGetterMap.get(k)
+				const domainKey = profileDomainMap.get(k) as ProfileDomainMapValue
+				if (!get()[domainKey] && getter && !getters[domainKey]) {
+					getters[domainKey] = getter
+				}
+			})
 			const promises = Object.keys(getters).map(domain => {
 				const tDomain = domain as ProfileDomainMapValue
 				const getter = getters[tDomain]
@@ -76,16 +74,13 @@ const globalStore = withLenses(() => ({
 			})
 
 			const result: any = {}
-			partial
-				.split(',')
-				.map(_.trim)
-				.forEach(k => {
-					const domainKey = profileDomainMap.get(k) as ProfileDomainMapValue
-					const domainValue = get()[domainKey] as any
-					if (domainValue && domainValue[k]) {
-						result[k] = domainValue[k]
-					}
-				})
+			partial.map(_.trim).forEach(k => {
+				const domainKey = profileDomainMap.get(k) as ProfileDomainMapValue
+				const domainValue = get()[domainKey] as any
+				if (domainValue && domainValue[k]) {
+					result[k] = domainValue[k]
+				}
+			})
 			return result
 		},
 	})),

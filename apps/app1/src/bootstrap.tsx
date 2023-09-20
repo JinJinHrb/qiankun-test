@@ -13,10 +13,10 @@ export function bootstrap() {
 
 let root: ReactDOM.Root
 
-const store = (set, get, store) => ({
+const store: StateCreator<any, any, any> = (set, get, store) => ({
 	aiVisible: false,
-	openAi: () => set({ aiVisible: true }, false, 'openAi'),
-	closeAi: () => set({ aiVisible: false }, false, 'closeAi'),
+	openAi: () => set({ aiVisible: true }, false /* , 'openAi' */),
+	closeAi: () => set({ aiVisible: false }, false /* , 'closeAi' */),
 })
 
 export function mount(props?: {
